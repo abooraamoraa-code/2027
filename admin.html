@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإدارة المركزية المخفية - أبو العز العمري</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>خزنة الإدارة المركزية (المخفية)</h1>
+            <p class="brand">إدارة وتطوير أبو العز العمري</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- نموذج تسجيل الدخول بصلاحيات المدير مع نظام الوصول المعقد -->
+        <div id="loginSection" class="form-card">
+            <h3 style="margin-bottom: 20px; color: var(--danger-color);">تسجيل دخول المشرف (منطقة محظورة)</h3>
+            <div class="form-group">
+                <label>البريد الإلكتروني للإدارة</label>
+                <input type="email" id="adminEmail" placeholder="admin@elizz.com">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="adminPassword" placeholder="********">
+            </div>
+            <div class="form-group">
+                <label>مفتاح الخزنة السري (Passcode)</label>
+                <input type="password" id="adminPasscode" placeholder="ELIZZ_MASTER_2026">
+            </div>
+            <button onclick="loginAsAdmin()" class="btn" style="width: 100%; background-color: var(--danger-color);">فك الحماية والدخول</button>
+            <p id="loginError" style="color: var(--danger-color); margin-top: 15px; text-align: center;"></p>
+        </div>
+
+        <!-- لوحة عرض البيانات المركزية (تظهر بعد المصادقة الناجحة) -->
+        <div id="dashboardSection" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2>سجلات الطلبات، الشكاوي، والدعم الفني المركزية</h2>
+                <button onclick="loadDashboardData()" class="btn">تحديث البيانات</button>
+            </div>
+
+            <div id="statsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;"></div>
+
+            <h3 style="margin-bottom: 15px; color: var(--accent-color);">كافة طلبات العملاء والشكاوى والآراء الواردة</h3>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>النوع</th>
+                            <th>الاسم</th>
+                            <th>البريد</th>
+                            <th>الموضوع / الخدمة</th>
+                            <th>التفاصيل</th>
+                            <th>الحالة</th>
+                            <th>التاريخ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="submissionsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let vaultTokenData = null;
+        let masterPasscode = '';
+
+        async function loginAsAdmin() {
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            masterPasscode = document.getElementById('adminPasscode').value;
+
+            try {
+                // 1. تسجيل الدخول العادي للحصول على التوكن
+                const res = await fetch('/api/v1/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+
+                if (!data.success) {
+                    document.getElementById('loginError').innerText = data.error;
+                    return;
+                }
+
+                if (data.user.role !== 'admin' || !data.vaultAccess) {
+                    document.getElementById('loginError').innerText = 'خطأ أمني: الحساب ليس له صلاحيات مدير نظام مطلقة.';
+                    return;
+                }
+
+                vaultTokenData = data.vaultAccess;
+                
+                // الانتقال لجلب البيانات من الخزنة المشفرة
+                loadDashboardData();
+
+            } catch (err) {
+                document.getElementById('loginError').innerText = 'فشل الاتصال بخادم المصادقة.';
+            }
+        }
+
+        async function loadDashboardData() {
+            try {
+                const res = await fetch('/api/v1/admin/master-control-panel', {
+                    method: 'GET',
+                    headers: {
+                        'x-vault-token': vaultTokenData.vaultToken,
+                        'x-vault-signature': vaultTokenData.signature,
+                        'x-admin-passcode': masterPasscode
+                    }
+                });
+
+                const result = await res.json();
+                if (!result.success) {
+                    alert(result.error);
+                    return;
+                }
+
+                // إخفاء تسجيل الدخول وإظهار اللوحة
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('dashboardSection').style.display = 'block';
+
+                // عرض الإحصائيات
+                const stats = result.statistics;
+                document.getElementById('statsContainer').innerHTML = `
+                    <div class="form-card" style="text-align:center;"><h4>إجمالي الطلبات</h4><p style="font-size:2rem; color:var(--accent-color);">${stats.totalSubmissions}</p></div>
+                    <div class="form-card" style="text-align:center;"><h4>طلبات المشاريع</h4><p style="font-size:2rem; color:#10b981;">${stats.projectOrdersCount}</p></div>
+                    <div class="form-card" style="text-align:center;"><h4>تذاكر الدعم</h4><p style="font-size:2rem; color:#f59e0b;">${stats.supportTicketsCount}</p></div>
+                    <div class="form-card" style="text-align:center;"><h4>الشكاوى</h4><p style="font-size:2rem; color:var(--danger-color);">${stats.complaintsCount}</p></div>
+                `;
+
+                // تعبئة الجدول بالمدخلات
+                const tbody = document.getElementById('submissionsTableBody');
+                tbody.innerHTML = '';
+                result.allSubmissions.forEach(sub => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><b>${sub.submissionType}</b></td>
+                            <td>${sub.clientName}</td>
+                            <td>${sub.clientEmail}</td>
+                            <td>${sub.subjectOrService}</td>
+                            <td>${sub.contentDetails}</td>
+                            <td><span style="color:var(--success-color);">${sub.status}</span></td>
+                            <td>${new Date(sub.createdAt).toLocaleString()}</td>
+                        </tr>
+                    `;
+                });
+
+            } catch (err) {
+                alert('خطأ في جلب بيانات لوحة الإدارة المشفرة.');
+            }
+        }
+    </script>
+</body>
+</html>
