@@ -3,145 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة أبو العز العمري - تطوير وتصميم مواقع الشركات</title>
+    <title>منصة أبو العز العمري - الحلول البرمجية المتكاملة</title>
     <link rel="stylesheet" href="style.css">
+    <!-- مكتبة أيقونات ومؤشرات -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
+    <!-- شريط التنقل العلوي الاحترافي -->
     <header>
-        <div>
+        <div class="brand-container">
             <h1>أبو العز العمري</h1>
-            <p class="brand">إدارة وتطوير المنصات الرقمية الكبرى</p>
+            <p>إدارة وتطوير المنصات الرقمية الكبرى</p>
         </div>
         <nav>
-            <a href="#services">الخدمات</a>
-            <a href="#order-section">اطلب مشروعك</a>
-            <a href="#support-section">الدعم والشكاوى</a>
+            <a href="#home" class="nav-link active" onclick="switchSection('home')">الرئيسية</a>
+            <a href="#services" class="nav-link" onclick="switchSection('services')">خدماتنا</a>
+            <a href="#how-we-work" class="nav-link" onclick="switchSection('how-we-work')">كيف نعمل</a>
+            <a href="#about" class="nav-link" onclick="switchSection('about')">من نحن</a>
+            <a href="#contact" class="nav-link" onclick="switchSection('contact')">تواصل ومراسلة</a>
         </nav>
     </header>
 
-    <div class="container">
-        <section class="hero-section">
-            <h2>نبني مستقبل شركتك الرقمي بأعلى معايير الأمان والاحترافية</h2>
-            <p>نقدم حلول برمجية متكاملة، تصميم مواقع مخصصة، أنظمة إدارة متقدمة، ودعم فني هندسي متواصل.</p>
-            <a href="#order-section" class="btn">ابدأ مشروعك الآن</a>
-        </section>
-
-        <!-- قسم طلبات إنشاء المشاريع -->
-        <div id="order-section" class="form-card" style="margin-bottom: 40px;">
-            <h3 style="margin-bottom: 20px; color: var(--accent-color);">طلب تصميم وتطوير موقع جديد</h3>
-            <form id="projectOrderForm">
-                <div class="form-group">
-                    <label>الاسم الكامل</label>
-                    <input type="text" id="clientName" required placeholder="أدخل اسمك الكريم">
-                </div>
-                <div class="form-group">
-                    <label>البريد الإلكتروني</label>
-                    <input type="email" id="clientEmail" required placeholder="name@company.com">
-                </div>
-                <div class="form-group">
-                    <label>نوع المشروع المطلوب</label>
-                    <select id="projectType">
-                        <option value="متجر إلكتروني ضخم">متجر إلكتروني ضخم</option>
-                        <option value="موقع شركة رسمي">موقع شركة رسمي</option>
-                        <option value="تطبيق ويب مخصص">تطبيق ويب مخصص (Custom Web App)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>الميزانية المقترحة</label>
-                    <input type="text" id="budgetRange" placeholder="مثال: 2000$ - 5000$">
-                </div>
-                <div class="form-group">
-                    <label>تفاصيل المشروع ومتطلباته</label>
-                    <textarea id="projectDetails" rows="4" required placeholder="اشرح فكرة مشروعك بالتفصيل..."></textarea>
-                </div>
-                <button type="submit" class="btn" style="width: 100%;">إرسال الطلب إلى الإدارة</button>
-            </form>
-            <p id="orderResponse" style="margin-top: 15px; text-align: center; font-weight: bold;"></p>
+    <!-- 1. قسم الصفحة الرئيسية -->
+    <section id="home" class="page-section active-section">
+        <div class="hero-banner">
+            <h2>هندسة البرمجيات الاستراتيجية وحلول الشركات المتقدمة</h2>
+            <p>نبتكر أنظمة رقمية، مواقع ويب سيادية، وتطبيقات ذكية تجمع بين القوة الأمنية المطلقة والتصميم الخارق، تحت إشراف هندسي مباشر.</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="#contact" class="btn-primary" onclick="switchSection('contact')">ابدأ مشروعك الآن</a>
+                <!-- زر تسجيل الدخول الحقيقي بـ Google OAuth -->
+                <a href="/api/v1/auth/google" class="btn-google">
+                    <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.2v3.15C3.18 21.32 7.23 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.2C.44 8.12 0 9.87 0 12s.44 3.88 1.2 5.42l4.08-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.18 2.68 1.2 6.58l4.08 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+                    تسجيل الدخول باستخدام جوجل
+                </a>
+            </div>
         </div>
+    </section>
 
-        <!-- قسم الدعم الفني والشكاوى والآراء -->
-        <div id="support-section" class="form-card">
-            <h3 style="margin-bottom: 20px; color: var(--accent-color);">الدعم الفني، الشكاوى، والآراء</h3>
-            <form id="supportForm">
+    <!-- 2. قسم الخدمات -->
+    <section id="services" class="page-section">
+        <div class="card-container">
+            <h3 style="color: var(--accent-glow); margin-bottom: 25px; font-size: 2rem;">خدماتنا التقنية والاستراتيجية</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div style="background: var(--bg-main); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 12px; color: white;">تطوير المواقع والمنصات</h4>
+                    <p style="color: var(--text-secondary);">إنشاء مواقع شركات، متاجر إلكترونية، ومنصات سحابية ضخمة بأعلى معايير الأداء والسرعة والتجاوب.</p>
+                </div>
+                <div style="background: var(--bg-main); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 12px; color: white;">الحماية والأمن السيبراني</h4>
+                    <p style="color: var(--text-secondary);">دروع حصينة ضد الاختراقات، جدران نار متقدمة، وأنظمة تشفير رقمية لحماية بيانات العملاء الحساسة.</p>
+                </div>
+                <div style="background: var(--bg-main); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 12px; color: white;">الدعم الفني والشكاوى المركزية</h4>
+                    <p style="color: var(--text-secondary);">لوحة تحكم إشرافية متكاملة تدار مركزياً لمعالجة التذاكر، الشكاوى، ومقترحات العملاء بسرعة قصوى.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. قسم كيف نعمل (محتوى تحليلي وتقني موسع بعمق) -->
+    <section id="how-we-work" class="page-section">
+        <div class="card-container deep-content">
+            <h2 style="color: var(--accent-glow); margin-bottom: 25px; font-size: 2.2rem;">منهجية العمل والتشغيل الهندسي المتكامل: كيف نعمل؟</h2>
+            
+            <p>تعتمد فلسفة العمل داخل مؤسستنا على منظومة هندسية صارمة ومدروسة بعناية فائقة تهدف إلى القضاء التام على العيوب البرمجية وضمان تسليم مشاريع رقمية ترتقي بمعايير الجودة العالمية إلى أقصى حدودها الممكنة. إن رحلة تحويل الفكرة الخام إلى منصة برمجية عملاقة تشمل مراحل متسلسلة ودقيقة يتم تنفيذها تحت إشراف مباشر.</p>
+
+            <h3>المرحلة الأولى: التحليل الهندسي ودراسة المتطلبات الشاملة</h3>
+            <p>في هذه الخطوة التأسيسية، لا نقوم فقط بتدوين الملاحظات السطحية، بل نخضع المشروع لعملية تشريح هندسي كاملة. يتم دراسة سلوك المستهدفين، تحديد حجم البيانات المتوقعة، رسم خريطة تدفق المستخدم (User Journey Flow)، وتحديد الأطر البرمجية وقواعد البيانات الأنسب لطبيعة المشروع (سواء كانت قواعد بيانات علائقية أو قواعد بيانات مستندات مرنة). نضمن في هذه المرحلة عدم وجود أي ثغرات منطقية قبل كتابة أول سطر برمجي.</p>
+
+            <h3>المرحلة الثانية: التصميم البصري وهندسة تجربة المستخدم (UI/UX Architecture)</h3>
+            <p>نؤمن بأن التصميم الراقي هو لغة التخاطب الأولى مع العميل. نقوم بتطوير واجهات مستخدم تفاعلية، ذات سمات بصرية مذهلة (مثل أنماط الدارك مود والنيون والواجهات المؤسسية الرسمية). يتم التركيز على سرعة التحميل، التجاوب المطلق مع كافة الأجهزة الذكية، وتسهيل الوصول إلى الأقسام المختلفة دون أي تعقيد بصري، مما يضمن تجربة استثنائية لا تُمحى من ذاكرة الزائر.</p>
+
+            <h3>المرحلة الثالثة: التطوير البرمجي الهيكلي والربط السيبراني</h3>
+            <p>تنطلق عملية كتابة الشيفرات البرمجية (Backend & Frontend) بناءً على معايير Clean Code والنظافة الهندسية. يتم ربط قواعد البيانات، تفعيل أنظمة المصادقة المشفرة (JWT و OAuth)، ودمج دروع الحماية المتقدمة ضد هجمات الحقن (Injection) وهجمات الحرمان من الخدمة (DDoS). كل مكون برمجي يتم اختباره بشكل منفصل (Unit Testing) للتأكد من خلوه تماماً من العيوب.</p>
+
+            <h3>المرحلة الرابعة: الاختبارات الشاملة والنشر السحابي الآمن</h3>
+            <p>قبل إطلاق المشروع رسمياً للجمهور، يخضع لاختبارات ضغط واختبارات أمنية صارمة لمحاكاة محاولات الاختراق واكتشاف نقاط الضعف إن وجدت. بعد اجتياز كافة الاختبارات بنجاح، يتم نشر المنصة على البيئات السحابية المؤكدة، وتفعيل لوحات الإشراف والتحكم المركزية لتبقى الإدارة مسيطرة على كل شاردة وواردة في النظام.</p>
+        </div>
+    </section>
+
+    <!-- 4. قسم من نحن (محتوى تحليلي وتاريخي موسع بعمق) -->
+    <section id="about" class="page-section">
+        <div class="card-container deep-content">
+            <h2 style="color: var(--accent-glow); margin-bottom: 25px; font-size: 2.2rem;">من نحن: الرؤية، الفلسفة، والريادة الرقمية</h2>
+
+            <p>نحن مؤسسة رائدة ومتخصصة في تقديم الحلول البرمجية الفائقة، هندسة وتطوير المواقع والمنصات الرقمية المعقدة، وتقديم البنى التحتية الآمنة للشركات والأفراد الطامحين للسيادة الرقمية. تأسست رؤيتنا على قاعدة صلبة تجمع بين الإبداع البصري والكفاءة البرمجية العالية، لنشكل علامة فارقة في عالم التكنولوجيا الحديثة.</p>
+
+            <h3>فلسفتنا في القيادة والابتكار</h3>
+            <p>لا نقتصر على تقديم خدمات تقليدية، بل نبتكر حلولاً مخصصة تلبي التحديات الفريدة لكل عميل. نؤمن بأن التكنولوجيا يجب أن تعمل بسلاسة مطلقة وبتكلفة مدروسة، مع الحفاظ على أعلى درجات السرية والأمان السيبراني. كل مشروع نتبناه يحمل بصمتنا الخاصة في الجودة والدقة والاحترافية المطلقة.</p>
+
+            <h3>التزامنا بالجودة وخلو النظام من العيوب</h3>
+            <p>هدفنا الأساسي هو بناء بيئات عمل رقمية مستقرة، آمنة، وقابلة للتوسع المستقبلي. نحن نعمل باستمرار على تحديث أدواتنا البرمجية وتبني أحدث التقنيات العالمية (Node.js، قواعد البيانات الحديثة، وأنظمة الحماية الذكية) لنضمن لعملائنا الاستدامة والتميز الدائم في أسواقهم التنافسية.</p>
+        </div>
+    </section>
+
+    <!-- 5. قسم التواصل والمراسلة والشكاوى المباشر (مع زر فيسبوك للدردشة المباشرة) -->
+    <section id="contact" class="page-section">
+        <div class="card-container" style="max-width: 800px; margin: 0 auto;">
+            <h3 style="color: var(--accent-glow); margin-bottom: 15px; font-size: 2rem;">التواصل المباشر، الدعم والشكاوى</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">اختر القناة المناسبة للتواصل معنا، أو اضغط على الزر أدناه للانتقال الفوري إلى محادثة فيسبوك الرسمية.</p>
+
+            <!-- زر التواصل المباشر عبر رابط فيسبوك المطلوب -->
+            <div style="text-align: center; margin-bottom: 40px;">
+                <a href="https://www.facebook.com/profile.php?id=61591794734274&locale=ar_AR" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #1877f2 0%, #0c4a9e 100%); padding: 16px 35px; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 10px;">
+                    <svg width="24" height="24" fill="white" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    التواصل الفوري عبر دراسة ودردشة فيسبوك
+                </a>
+            </div>
+
+            <!-- نموذج استقبال الطلبات والشكاوى والآراء -->
+            <form id="unifiedSubmissionForm">
                 <div class="form-group">
-                    <label>نوع المدخل</label>
-                    <select id="submissionType">
+                    <label>نوع المدخل (طلب، دعم، شكوى، أو رأي)</label>
+                    <select id="subType">
+                        <option value="project_order">طلب مشروع برمجي جديد</option>
                         <option value="support_ticket">تذكرة دعم فني</option>
                         <option value="complaint">شكوى رسمية</option>
                         <option value="client_feedback">رأي أو تقييم المنصة</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>الاسم</label>
-                    <input type="text" id="supName" required>
+                    <label>الاسم الكامل</label>
+                    <input type="text" id="cName" required placeholder="أدخل اسمك الكريم">
                 </div>
                 <div class="form-group">
                     <label>البريد الإلكتروني</label>
-                    <input type="email" id="supEmail" required>
+                    <input type="email" id="cEmail" required placeholder="name@domain.com">
                 </div>
                 <div class="form-group">
-                    <label>العنوان / موضوع الشكوى</label>
-                    <input type="text" id="subjectOrService" required>
+                    <label>الموضوع أو نوع الخدمة</label>
+                    <input type="text" id="cSubject" required placeholder="عنوان موجز لطلبك">
                 </div>
                 <div class="form-group">
                     <label>التفاصيل الكاملة</label>
-                    <textarea id="contentDetails" rows="3" required></textarea>
+                    <textarea id="cDetails" rows="4" required placeholder="اكتب تفاصيل طلبك أو شكواك بوضوح..."></textarea>
                 </div>
-                <button type="submit" class="btn" style="width: 100%; background-color: #10b981;">إرسال إلى لوحة الإشراف</button>
+                <button type="submit" class="btn-primary" style="width: 100%;">إرسال الطلب مركزياً</button>
             </form>
-            <p id="supResponse" style="margin-top: 15px; text-align: center; font-weight: bold;"></p>
+            <p id="formFeedback" style="margin-top: 20px; text-align: center; font-weight: bold;"></p>
         </div>
-    </div>
+    </section>
 
     <footer>
         <p>جميع الحقوق محفوظة © 2026 | إدارة وتطوير أبو العز العمري</p>
     </footer>
 
+    <!-- سكريبت التنقل الفوري ومعالجة النماذج -->
     <script>
-        // إرسال طلبات المشاريع
-        document.getElementById('projectOrderForm').addEventListener('submit', async (e) => {
+        // دالة تبديل الأقسام فورياً دون النزول المزعج (Single Page App Navigation)
+        function switchSection(sectionId) {
+            // إخفاء كافة الأقسام
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(sec => sec.classList.remove('active-section'));
+
+            // إزالة التنشيط عن جميع أزرار النافبار
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            // إظهار القسم المطلوب وتنشيط الزر الموافق له
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active-section');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // تمييز زر النافبار النشط
+            event && event.target && event.target.classList.add('active');
+        }
+
+        // إرسال الطلبات والشكاوى للـ Backend
+        document.getElementById('unifiedSubmissionForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const data = {
-                submissionType: 'project_order',
-                clientName: document.getElementById('clientName').value,
-                clientEmail: document.getElementById('clientEmail').value,
-                subjectOrService: document.getElementById('projectType').value,
-                budgetRange: document.getElementById('budgetRange').value,
-                contentDetails: document.getElementById('projectDetails').value
+            const payload = {
+                submissionType: document.getElementById('subType').value,
+                clientName: document.getElementById('cName').value,
+                clientEmail: document.getElementById('cEmail').value,
+                subjectOrService: document.getElementById('cSubject').value,
+                contentDetails: document.getElementById('cDetails').value
             };
 
-            const res = await fetch('/api/v1/submissions/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            const result = await res.json();
-            const msg = document.getElementById('orderResponse');
-            msg.style.color = result.success ? '#10b981' : '#ef4444';
-            msg.innerText = result.message || result.error;
-        });
-
-        // إرسال الدعم والشكاوى والآراء
-        document.getElementById('supportForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const data = {
-                submissionType: document.getElementById('submissionType').value,
-                clientName: document.getElementById('supName').value,
-                clientEmail: document.getElementById('supEmail').value,
-                subjectOrService: document.getElementById('subjectOrService').value,
-                contentDetails: document.getElementById('contentDetails').value
-            };
-
-            const res = await fetch('/api/v1/submissions/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            const result = await res.json();
-            const msg = document.getElementById('supResponse');
-            msg.style.color = result.success ? '#10b981' : '#ef4444';
-            msg.innerText = result.message || result.error;
+            try {
+                const res = await fetch('/api/v1/submissions/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+                const msgBox = document.getElementById('formFeedback');
+                msgBox.style.color = result.success ? 'var(--success-color)' : 'var(--danger-color)';
+                msgBox.innerText = result.message || result.error;
+            } catch (err) {
+                const msgBox = document.getElementById('formFeedback');
+                msgBox.style.color = 'var(--danger-color)';
+                msgBox.innerText = 'حدث خطأ في الاتصال بالخادم الرئيسي.';
+            }
         });
     </script>
 </body>
