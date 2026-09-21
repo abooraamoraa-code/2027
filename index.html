@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة أبو العز العمري - تطوير وتصميم مواقع الشركات</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>أبو العز العمري</h1>
+            <p class="brand">إدارة وتطوير المنصات الرقمية الكبرى</p>
+        </div>
+        <nav>
+            <a href="#services">الخدمات</a>
+            <a href="#order-section">اطلب مشروعك</a>
+            <a href="#support-section">الدعم والشكاوى</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section class="hero-section">
+            <h2>نبني مستقبل شركتك الرقمي بأعلى معايير الأمان والاحترافية</h2>
+            <p>نقدم حلول برمجية متكاملة، تصميم مواقع مخصصة، أنظمة إدارة متقدمة، ودعم فني هندسي متواصل.</p>
+            <a href="#order-section" class="btn">ابدأ مشروعك الآن</a>
+        </section>
+
+        <!-- قسم طلبات إنشاء المشاريع -->
+        <div id="order-section" class="form-card" style="margin-bottom: 40px;">
+            <h3 style="margin-bottom: 20px; color: var(--accent-color);">طلب تصميم وتطوير موقع جديد</h3>
+            <form id="projectOrderForm">
+                <div class="form-group">
+                    <label>الاسم الكامل</label>
+                    <input type="text" id="clientName" required placeholder="أدخل اسمك الكريم">
+                </div>
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" id="clientEmail" required placeholder="name@company.com">
+                </div>
+                <div class="form-group">
+                    <label>نوع المشروع المطلوب</label>
+                    <select id="projectType">
+                        <option value="متجر إلكتروني ضخم">متجر إلكتروني ضخم</option>
+                        <option value="موقع شركة رسمي">موقع شركة رسمي</option>
+                        <option value="تطبيق ويب مخصص">تطبيق ويب مخصص (Custom Web App)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الميزانية المقترحة</label>
+                    <input type="text" id="budgetRange" placeholder="مثال: 2000$ - 5000$">
+                </div>
+                <div class="form-group">
+                    <label>تفاصيل المشروع ومتطلباته</label>
+                    <textarea id="projectDetails" rows="4" required placeholder="اشرح فكرة مشروعك بالتفصيل..."></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">إرسال الطلب إلى الإدارة</button>
+            </form>
+            <p id="orderResponse" style="margin-top: 15px; text-align: center; font-weight: bold;"></p>
+        </div>
+
+        <!-- قسم الدعم الفني والشكاوى والآراء -->
+        <div id="support-section" class="form-card">
+            <h3 style="margin-bottom: 20px; color: var(--accent-color);">الدعم الفني، الشكاوى، والآراء</h3>
+            <form id="supportForm">
+                <div class="form-group">
+                    <label>نوع المدخل</label>
+                    <select id="submissionType">
+                        <option value="support_ticket">تذكرة دعم فني</option>
+                        <option value="complaint">شكوى رسمية</option>
+                        <option value="client_feedback">رأي أو تقييم المنصة</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الاسم</label>
+                    <input type="text" id="supName" required>
+                </div>
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" id="supEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>العنوان / موضوع الشكوى</label>
+                    <input type="text" id="subjectOrService" required>
+                </div>
+                <div class="form-group">
+                    <label>التفاصيل الكاملة</label>
+                    <textarea id="contentDetails" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; background-color: #10b981;">إرسال إلى لوحة الإشراف</button>
+            </form>
+            <p id="supResponse" style="margin-top: 15px; text-align: center; font-weight: bold;"></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2026 | إدارة وتطوير أبو العز العمري</p>
+    </footer>
+
+    <script>
+        // إرسال طلبات المشاريع
+        document.getElementById('projectOrderForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                submissionType: 'project_order',
+                clientName: document.getElementById('clientName').value,
+                clientEmail: document.getElementById('clientEmail').value,
+                subjectOrService: document.getElementById('projectType').value,
+                budgetRange: document.getElementById('budgetRange').value,
+                contentDetails: document.getElementById('projectDetails').value
+            };
+
+            const res = await fetch('/api/v1/submissions/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await res.json();
+            const msg = document.getElementById('orderResponse');
+            msg.style.color = result.success ? '#10b981' : '#ef4444';
+            msg.innerText = result.message || result.error;
+        });
+
+        // إرسال الدعم والشكاوى والآراء
+        document.getElementById('supportForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                submissionType: document.getElementById('submissionType').value,
+                clientName: document.getElementById('supName').value,
+                clientEmail: document.getElementById('supEmail').value,
+                subjectOrService: document.getElementById('subjectOrService').value,
+                contentDetails: document.getElementById('contentDetails').value
+            };
+
+            const res = await fetch('/api/v1/submissions/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await res.json();
+            const msg = document.getElementById('supResponse');
+            msg.style.color = result.success ? '#10b981' : '#ef4444';
+            msg.innerText = result.message || result.error;
+        });
+    </script>
+</body>
+</html>
